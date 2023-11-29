@@ -22,6 +22,7 @@ export class BaseService {
       ()=>{
       const filename= '/feltolt/'+file.name
       const storegeRef=this.storage.ref(filename)
+      
       storegeRef.delete().subscribe()
     }
     )
@@ -54,6 +55,12 @@ export class BaseService {
   }
 
   saveFileData(fileData:any){
+      this.db.list('/feltolt' +fileData.name).snapshotChanges().subscribe(
+        {
+          next:(a)=>{console.log("OK: ",a)},
+          error:(a)=>{console.log("Error: ",a)}
+        }
+      );
       this.db.list('/feltolt/').push(fileData)
   }
 
